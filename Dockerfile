@@ -1,12 +1,9 @@
-FROM python:3.10-slim-buster
-
+FROM python:3.9
 WORKDIR /app
 
-RUN apt-get -qq update --fix-missing && apt-get -qq upgrade -y && apt-get install git -y
+COPY requirements.txt /app/
+RUN pip3 install -r requirements.txt
 
-COPY requirements.txt .
-RUN pip3 install --no-cache-dir -r requirements.txt
+COPY . /app
 
-COPY . .
-
-CMD ["bash","start.sh"]
+CMD flask run -h 0.0.0.0 -p 10000 & python3 update.py && python3 -m FZBypass
