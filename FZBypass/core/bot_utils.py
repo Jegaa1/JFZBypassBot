@@ -20,7 +20,7 @@ AuthChatsTopics = create(auth_topic)
 async def auto_bypass(_, c, message):
     if Config.AUTO_BYPASS and message.entities and not match(r'^\/(bash|shell)($| )', message.text) and any(enty.type in [MessageEntityType.TEXT_LINK, MessageEntityType.URL] for enty in message.entities):
         return True
-    elif not Config.AUTO_BYPASS and (txt := message.text) and match(fr'^\/(bypass|bp)(@{(await c.get_me()).username})?($| )', txt) and not match(r'^\/(bash|shell)($| )', txt):
+    elif not Config.AUTO_BYPASS and (txt := message.text) and match(fr'^\/(jai|j)(@{(await c.get_me()).username})?($| )', txt) and not match(r'^\/(bash|shell)($| )', txt):
         return True
     return False
 
