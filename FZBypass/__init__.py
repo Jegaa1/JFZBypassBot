@@ -25,7 +25,7 @@ class Config:
     if BOT_TOKEN == '' or API_HASH == '' or API_ID == '':
         LOGGER.critical('ENV Missing. Exiting Now...')
         exit(1)
-    AUTO_BYPASS     = getenv('AUTO_BYPASS', 'False').lower() == 'true'
+    AUTO_BYPASS     = getenv('AUTO_BYPASS', 'True').lower() == 'true'
     AUTH_CHATS      = getenv('AUTH_CHATS', '').split()
     OWNER_ID        = int(getenv('OWNER_ID', 0))
     DIRECT_INDEX    = getenv('DIRECT_INDEX', '').rstrip('/')
