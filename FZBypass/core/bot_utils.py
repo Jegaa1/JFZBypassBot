@@ -1,4 +1,5 @@
 from pyrogram.filters import create
+from pyrogram.enums import MessageEntityType
 from re import search, match
 from requests import get as rget
 from urllib.parse import urlparse, parse_qs
@@ -48,4 +49,5 @@ def convert_time(seconds):
             period_value, mseconds = divmod(mseconds, period_seconds)
             result += f'{int(period_value)}{period_name}'
     if result == '':
-    return '0ms' if result == '' else result
+        return '0ms'
+    return result
