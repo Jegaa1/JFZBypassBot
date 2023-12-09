@@ -48,5 +48,4 @@ def convert_time(seconds):
             period_value, mseconds = divmod(mseconds, period_seconds)
             result += f'{int(period_value)}{period_name}'
     if result == '':
-        return '0ms'
-    return result
+    return '0ms' if result == '' else result
