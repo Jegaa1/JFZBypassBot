@@ -115,6 +115,8 @@ async def direct_link_checker(link, onlylink=False):
         blink = await transcript(link, "https://page.finclub.in/", "https://finclub.in/", 8)
     elif bool(match(r"https?:\/\/tnvalue\.\S+", link)):
         blink = await transcript(link, "https://page.finclub.in/", "https://finclub.in/", 8)
+    elif bool(match(r"https?:\/\/pdisk\.\S+", link)):
+        blink = await transcript(link, "https://last.moneycase.link/", "https://infokeeda.xyz/", 8)
     elif bool(match(r"https?:\/\/sxslink\.\S+", link)):
         blink = await transcript(link, "https://getlink.sxslink.com/", "https://cinemapettai.in/", 5)
     elif bool(match(r"https?:\/\/ziplinker\.\S+", link)):
