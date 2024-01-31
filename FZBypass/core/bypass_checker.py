@@ -44,7 +44,7 @@ async def direct_link_checker(link, onlylink=False):
     elif bool(match(r"https?:\/\/(gyanilinks|gtlinks)\.\S+", link)):
         blink = await gyanilinks(link)
     elif bool(match(r"https?:\/\/.+\.tnshort\.\S+", link)):
-        blink = await transcript(link, "https://go.tnshort.net/", "https://market.finclub.in/", 14)
+        blink = await transcript(link, "https://go.tnshort.net/", "https://jrlinks.in/", 9)
     elif bool(match(r"https?:\/\/mdisky\.\S+", link)):
         blink = await transcript(link, "https://go.bloggingaro.com/", "https://www.bloggingaro.com/", 6)
     elif bool(match(r"https?:\/\/(xpshort|push.bdnewsx|techymozo)\.\S+", link)):
@@ -115,9 +115,9 @@ async def direct_link_checker(link, onlylink=False):
     elif bool(match(r"https?:\/\/urlspay\.\S+", link)):
         blink = await transcript(link, "https://finance.smallinfo.in/", "https://tech.filmypoints.in/", 5)
     elif bool(match(r"https?:\/\/.+\.tnvalue\.\S+", link)):
-        blink = await transcript(link, "https://page.finclub.in/", "https://finclub.in/", 10)
+        blink = await transcript(link, "https://page.finclub.in/", "https://earnme.club/", 10)
     elif bool(match(r"https?:\/\/tnvalue\.\S+", link)):
-        blink = await transcript(link, "https://page.finclub.in/", "https://finclub.in/", 10)
+        blink = await transcript(link, "https://page.finclub.in/", "https://earnme.club/", 10)
     elif bool(match(r"https?:\/\/pdisk\.\S+", link)):
         blink = await transcript(link, "https://last.moneycase.link/", "https://www.infokeeda.xyz/", 8)
     elif bool(match(r"https?:\/\/sxslink\.\S+", link)):
