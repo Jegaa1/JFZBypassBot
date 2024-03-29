@@ -161,10 +161,11 @@ async def tamilmv(url):
     soup = BeautifulSoup(resp.text, 'html.parser')
     mag_links = []
     mag_tags = soup.select('a[href^="magnet:?xt=urn:btih:"]')
-    for m in mag_tags:
-        magnet_link = m['href'].split('&')[0]
-        formatted_link = f'<a href="https://t.me/share/url?url=/ql%20{magnet_link}"><b>Magnet</b>🧲</a>'
-        mag_links.append(formatted_link)
+    tor_tags = soup.select('a[data-fileext="torrent"]')
+    for no, (t, m) in enumerate(zip(tor_tags, mag_tags), start=1):
+        filename = sub(r"www\S+|\- |\.torrent", '', t.string)
+        mag_link = m['href'].split('&')[0]
+        mag_links.append((filename, f"/ql {mag_link}"))
     return mag_links
    
     
