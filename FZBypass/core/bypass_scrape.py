@@ -165,12 +165,10 @@ async def tamilmv(url):
     parse_data = f"<b><u>{soup.title.string}</u></b>"
     for no, (t, m) in enumerate(zip(tor, mag), start=1):
         filename = sub(r"www\S+|\- |\.torrent", '', t.string)
-        magnet_link = m['href'].split('&')[0]
-        magnet_link_with_ql = "/ql" + "" + magnet_link
         parse_data += f'''
         
 {no}. <code>{filename}</code>
-┖ <b>Links :</b> <a href="https://t.me/share/url?url={magnet_link_with_ql}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>'''
+┖ <b>Links :</b> <a href="https://t.me/share/url?url={m['href'].split('&')[0]}/ql"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>'''
     return parse_data
 
 async def tamilblasters(url):
@@ -182,10 +180,8 @@ async def tamilblasters(url):
     parse_data = f"<b><u>{soup.title.string}</u></b>"
     for no, (t, m) in enumerate(zip(tor, mag), start=1):
         filename = sub(r"www\S+|\- |\.torrent", '', t.string)
-        magnet_link = m['href'].split('&')[0]
-        magnet_link_with_ql = "/ql" + "" + magnet_link
         parse_data += f'''
         
 {no}. <code>{filename}</code>
-┖ <b>Links :</b> <a href="https://t.me/share/url?url={magnet_link_with_ql}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>'''
+┖ <b>Links :</b> <a href="https://t.me/share/url?url={m['href'].split('&')[0]}/ql"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>'''
     return parse_data
