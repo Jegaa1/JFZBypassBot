@@ -222,7 +222,8 @@ async def direct_link_checker(link, onlylink=False):
         return await sharespark(link)
     elif bool(match(r"https?:\/\/.+\.1tamilmv\.\S+", link)):
         return await tamilmv(link)
-    
+    elif bool(match(r"https?:\/\/.+\.1tamilblasters\.\S+", link)):
+        return await tamilblasters(link)
     # DL Links
     elif bool(match(r"https?:\/\/hubdrive\.\S+", link)):
         return await drivescript(link, Config.HUBDRIVE_CRYPT, "HubDrive")
