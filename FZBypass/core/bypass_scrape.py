@@ -155,7 +155,7 @@ async def toonworld4all(url: str):
         prsd = prsd[:-2]
     return prsd
 
-async def tamilmv(url):
+async def tamilm1v(url):
     cget = create_scraper().request
     resp = cget("GET", url)
     soup = BeautifulSoup(resp.text, 'html.parser')
@@ -187,12 +187,12 @@ def extract_magnet_links_with_names(output):
 
 # Example usage:
 url = "https://example.com"
-output, _ = await tamilmv(url)
+output, _ = await tamil3mv(url)
 magnet_links_with_names = extract_magnet_links_with_names(output)
 print(magnet_links_with_names)
    
     
-async def tamilmv1(url):
+async def tamilmv(url):
     cget = create_scraper().request
     resp = cget("GET", url)
     soup = BeautifulSoup(resp.text, 'html.parser')
