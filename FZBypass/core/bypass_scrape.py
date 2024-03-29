@@ -155,43 +155,6 @@ async def toonworld4all(url: str):
         prsd = prsd[:-2]
     return prsd
 
-async def tamilm1v(url):
-    cget = create_scraper().request
-    resp = cget("GET", url)
-    soup = BeautifulSoup(resp.text, 'html.parser')
-    mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
-    tor = soup.select('a[data-fileext="torrent"]')
-    parse_data = f"<b><u>{soup.title.string}</u></b>"
-    magnet_links_with_names = []
-    for no, (t, m) in enumerate(zip(tor, mag), start=1):
-        filename = re.sub(r"www\S+|\- |\.torrent", '', t.string)
-        magnet_link = m['href'].split('&')[0]
-        magnet_link_with_ql = "/ql " + magnet_link
-        parse_data += f'''
-        
-{no}. <code>{filename}</code>
-┖ <b>Links :</b> <a href="https://t.me/share/url?url={magnet_link_with_ql}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>'''
-        magnet_links_with_names.append((filename, magnet_link_with_ql))
-    return parse_data, magnet_links_with_names
-
-def extract_magnet_links_with_names(output):
-    magnet_links_with_names = []
-    # Use regular expression to extract movie names and magnet links from the output
-    movie_name_pattern = r'<code>(.*?)<\/code>'
-    magnet_link_pattern = r"magnet:\?xt=urn:btih:[a-fA-F0-9]{40}"
-    matches_movie_name = re.findall(movie_name_pattern, output)
-    matches_magnet_link = re.findall(magnet_link_pattern, output)
-    for movie_name, magnet_link in zip(matches_movie_name, matches_magnet_link):
-        magnet_links_with_names.append((movie_name.strip(), magnet_link))
-    return magnet_links_with_names
-
-# Example usage:
-url = "https://example.com"
-output, _ = await tamil3mv(url)
-magnet_links_with_names = extract_magnet_links_with_names(output)
-print(magnet_links_with_names)
-   
-    
 async def tamilmv(url):
     cget = create_scraper().request
     resp = cget("GET", url)
