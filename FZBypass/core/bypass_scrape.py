@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup, NavigableString, Tag
 
 from FZBypass import Config, LOGGER
 from FZBypass.core.bypass_ddl import transcript
-
+import re
 
 async def sharespark(url: str) -> str:
     gd_txt = ""
