@@ -156,7 +156,6 @@ async def toonworld4all(url: str):
     return prsd
 
 async def tamilmv(url):
-async def tamilmv(url):
     cget = create_scraper().request
     resp = cget("GET", url)
     soup = BeautifulSoup(resp.text, 'html.parser')
