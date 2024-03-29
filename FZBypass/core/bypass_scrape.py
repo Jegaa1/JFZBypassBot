@@ -154,9 +154,21 @@ async def toonworld4all(url: str):
                 prsd += f"<a href='{sl}'>{tl.string}</a>, "
         prsd = prsd[:-2]
     return prsd
-    
-    
+
 async def tamilmv(url):
+    cget = create_scraper().request
+    resp = cget("GET", url)
+    soup = BeautifulSoup(resp.text, 'html.parser')
+    mag_links = []
+    mag_tags = soup.select('a[href^="magnet:?xt=urn:btih:"]')
+    for m in mag_tags:
+        magnet_link = m['href'].split('&')[0]
+        formatted_link = f'<a href="https://t.me/share/url?url=/ql%20{magnet_link}"><b>Magnet</b>🧲</a>'
+        mag_links.append(formatted_link)
+    return mag_links
+   
+    
+async def tamilmv1(url):
     cget = create_scraper().request
     resp = cget("GET", url)
     soup = BeautifulSoup(resp.text, 'html.parser')
