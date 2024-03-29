@@ -166,7 +166,7 @@ async def tamilmv(url):
     for no, (t, m) in enumerate(zip(tor, mag), start=1):
         filename = sub(r"www\S+|\- |\.torrent", '', t.string)
         magnet_link = m['href'].split('&')[0]
-        magnet_link_with_ql = "/ql " + magnet_link
+        magnet_link_with_ql = "/ql" + " " + magnet_link
         parse_data += f'''
         
 {no}. <code>{filename}</code>
@@ -183,7 +183,7 @@ async def tamilblasters(url):
     for no, (t, m) in enumerate(zip(tor, mag), start=1):
         filename = sub(r"www\S+|\- |\.torrent", '', t.string)
         magnet_link = m['href'].split('&')[0]
-        magnet_link_with_ql = "/ql " + magnet_link
+        magnet_link_with_ql = "/ql " + " " + magnet_link
         parse_data += f'''
         
 {no}. <code>{filename}</code>
