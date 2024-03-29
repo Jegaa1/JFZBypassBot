@@ -168,7 +168,7 @@ async def tamilmv(url):
         parse_data += f'''
         
 {no}. <code>{filename}</code>
-┖ <b>Links :</b> <a href="https://t.me/share/url?url={m['href'].split('&')[0]}/ql"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>'''
+┖ <b>Links :</b> <a href="https://t.me/share/url?url={m['href'].split('&')[0]}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a> /ql {m['href'].split('&')[0]}'''
     return parse_data
 
 async def tamilblasters(url):
@@ -183,5 +183,5 @@ async def tamilblasters(url):
         parse_data += f'''
         
 {no}. <code>{filename}</code>
-┖ <b>Links :</b> <a href="https://t.me/share/url?url={m['href'].split('&')[0]}/ql"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>'''
+┖ <b>Links :</b> <a href="https://t.me/share/url?url={m['href'].split('&')[0]}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a> /ql {m['href'].split('&')[0]}'''
     return parse_data
