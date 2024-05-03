@@ -27,8 +27,7 @@ async def start_msg(client, message):
             [InlineKeyboardButton('🎓 Dev', url='https://t.me/JAsuran2p0'), InlineKeyboardButton('🔍 Deploy Own', url="https://github.com/")]
             ])
     )
-    await react_msg(client, message)
-    return
+    
 
 @Bypass.on_message(filters.all)
 async def react_msg(client,message):
@@ -397,3 +396,5 @@ async def inline_query(client, query):
         )
     except QueryIdInvalid:
         pass
+    await react_msg(client, message)
+    return
