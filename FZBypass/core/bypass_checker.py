@@ -191,7 +191,7 @@ async def direct_link_checker(link, onlylink=False):
     elif bool(match(r"https?:\/\/ouo\.\S+", link)):
         blink = await ouo(link)
     elif bool(match(r"https?:\/\/(shareus|shrs)\.\S+", link)):
-        blink = await shareus(link)
+        raise DDLException("Bypass Not Allowed !")
     elif bool(match(r"https?:\/\/(.+\.)?dropbox\.\S+", link)):
         blink = await dropbox(link)
     elif bool(match(r"https?:\/\/uptobox\.\S+", link)):
