@@ -7,7 +7,7 @@ curl_cffi
 lxml
 httpx
 python-dotenv
-pyrofork
+#pyrofork
 requests
 tgcrypto
 urllib3==1.26
