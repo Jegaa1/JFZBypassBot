@@ -1,7 +1,8 @@
 from time import time
 from re import match
 from asyncio import create_task, gather, sleep as asleep, create_subprocess_exec
-from pyrogram.filters import create, command, private, user, emoji
+from pyrogram.filters import create, command, private, user
+from pyrogram import emoji
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, InputTextMessageContent
 from pyrogram.enums import MessageEntityType
 from pyrogram.errors import QueryIdInvalid
