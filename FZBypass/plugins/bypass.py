@@ -29,72 +29,7 @@ async def start_msg(client, message):
     )
     
 
-@Bypass.on_message(filters.all)
-async def react_msg(client,message):
-    emojis = [
-        "👍",
-        "👎",
-        "❤️",
-        "🔥",
-        "🥰",
-        "👏",
-        "😁",
-        "🤔",
-        "😱",
-        "🎉",
-        "🤩",
-        "🙏",
-        "👌",
-        "🕊",
-        "🤡",
-        "🥱",
-        "😍",
-        "🐳",
-        "❤️‍🔥",
-        "🌚",
-        "🌭",
-        "💯",
-        "🤣",
-        "⚡️",
-        "🏆",
-        "💔",
-        "🤨",
-        "😐",
-        "🍓",
-        "🍾",
-        "💋",
-        "😈",
-        "😴",
-        "🤓",
-        "👻",
-        "👨‍💻",
-        "👀",
-        "🙈",
-        "😇",
-        "🤝",
-        "✍️",
-        "🤗",
-        "🫡",
-        "🎅",
-        "🎄",
-        "☃️",
-        "💅",
-        "🤪",
-        "🗿",
-        "🆒",
-        "💘",
-        "🙉",
-        "🦄",
-        "😘",
-        "💊",
-        "🙊",
-        "😎",
-    ]
-    rnd_emoji = random.choice(emojis)
-    await client.send_reaction(
-        chat_id=message.chat.id, message_id=message.id, emoji=rnd_emoji, big=True
-    )
-    return
+
     
 
 @Bypass.on_message(BypassFilter)
