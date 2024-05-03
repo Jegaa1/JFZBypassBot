@@ -1,3 +1,4 @@
+git+https://github.com/KurimuzonAkuma/pyrogram
 aiohttp
 bs4
 cfscrape
