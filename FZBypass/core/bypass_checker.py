@@ -51,7 +51,9 @@ async def direct_link_checker(link, onlylink=False):
         blink = await transcript(link, "https://go.kingurl.in/", "https://moderngyan.com/", 6)
     elif bool(match(r"https?:\/\/offerlinks\.\S+", link)):
         blink = await transcript(link, "https://first.offerlinks.in/", "https://offerpagehub.fun/", 6)
-    
+    elif bool(match(r"https?:\/\/runurl\.\S+", link)):
+        blink = await transcript(link, "https://get.runurl.in/", "https://c1.bgmi32bitapk.in/", 6)
+
     elif bool(match(r"https?:\/\/(xpshort|push.bdnewsx|techymozo)\.\S+", link)):
         blink = await transcript(link, "https://techymozo.com/", "https://portgyaan.in/", 8)
     elif bool(match(r"https?:\/\/go.lolshort\.\S+", link)):
