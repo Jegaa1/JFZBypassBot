@@ -103,6 +103,72 @@ async def bypass_check(client, message):
     else:
         await wait_msg.delete()
 
+@Bypass.on_message(filters.all)
+async def react_msg(client,message):
+    emojis = [
+        "👍",
+        "👎",
+        "❤️",
+        "🔥",
+        "🥰",
+        "👏",
+        "😁",
+        "🤔",
+        "😱",
+        "🎉",
+        "🤩",
+        "🙏",
+        "👌",
+        "🕊",
+        "🤡",
+        "🥱",
+        "😍",
+        "🐳",
+        "❤️‍🔥",
+        "🌚",
+        "🌭",
+        "💯",
+        "🤣",
+        "⚡️",
+        "🏆",
+        "💔",
+        "🤨",
+        "😐",
+        "🍓",
+        "🍾",
+        "💋",
+        "😈",
+        "😴",
+        "🤓",
+        "👻",
+        "👨‍💻",
+        "👀",
+        "🙈",
+        "😇",
+        "🤝",
+        "✍️",
+        "🤗",
+        "🫡",
+        "🎅",
+        "🎄",
+        "☃️",
+        "💅",
+        "🤪",
+        "🗿",
+        "🆒",
+        "💘",
+        "🙉",
+        "🦄",
+        "😘",
+        "💊",
+        "🙊",
+        "😎",
+    ]
+    rnd_emoji = random.choice(emojis)
+    await client.send_reaction(
+        chat_id=message.chat.id, message_id=message.id, emoji=rnd_emoji, big=True
+    )
+    return
 
 @Bypass.on_message(command('log') & user(Config.OWNER_ID))
 async def send_logs(client, message):
