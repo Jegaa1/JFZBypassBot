@@ -102,7 +102,7 @@ async def direct_link_checker(link, onlylink=False):
     elif bool(match(r"https?:\/\/.+\.tulinks\.\S+", link)):
         blink = await transcript(link, "https://go.tulinks.online", "https://tutelugu.co/", 8)
     elif bool(match(r"https?:\/\/(.+\.)?vipurl\.\S+", link)):
-        blink = await transcript(link, "https://count.vipurl.in/", "https://kiss6kartu.in/", 5)
+        blink = await transcript(link, "https://count.vipurl.in/", "https://newbharatyojna.com/", 5)
     elif bool(match(r"https?:\/\/indyshare\.\S+", link)):
         blink = await transcript(link, "https://indyshare.net", "https://insurancewolrd.in/", 3.1)
     elif bool(match(r"https?:\/\/linkyearn\.\S+", link)):
