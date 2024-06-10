@@ -160,13 +160,9 @@ async def toonworld4all(url: str):
 
 
 
-async def fetch_data():
-    await asyncio.sleep(1)
-    return "This is an async result"
-
 async def main():
-    response = fetch_data()  # This is a coroutine
-    result = await response  # This is now correct
+    response = "This is a string"
+    result = await response  # This will cause the error
     print(result)
 
 # To run the async function
