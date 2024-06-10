@@ -159,15 +159,6 @@ async def toonworld4all(url: str):
     return prsd
 
 
-
-async def main():
-    response = "This is a string"
-    result = await response  # This will cause the error
-    print(result)
-
-# To run the async function
-asyncio.run(main())
-
 def tamilmv(url):
     cget = create_scraper().request
     resp = cget("GET", url)
