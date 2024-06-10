@@ -1,3 +1,5 @@
+#jega
+
 from asyncio import gather, create_task
 from re import search, match, findall, sub
 from requests import get as rget
@@ -178,7 +180,6 @@ def tamilmv(url):
         
 {no}. <code>{filename}</code>
 ┖ <b>Links :</b> <a href="https://t.me/share/url?url=/ql%20{m['href'].split('&')[0]}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>'''
-    
     return parse_data
 
 async def tamilblasters(url):
