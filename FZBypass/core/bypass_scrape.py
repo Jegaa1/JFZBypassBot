@@ -155,19 +155,30 @@ async def toonworld4all(url: str):
         prsd = prsd[:-2]
     return prsd
 
-async def tamilmv(url):
+def tamilmv(url):
     cget = create_scraper().request
     resp = cget("GET", url)
     soup = BeautifulSoup(resp.text, 'html.parser')
+    
+    # Find the magnet links and torrent links
     mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
     tor = soup.select('a[data-fileext="torrent"]')
-    parse_data = f"<b><u>{soup.title.string}</u></b>"
+    
+    # Find the image
+    image = soup.find('img')
+    image_src = image['src'] if image else 'No image found'
+    
+    # Parse the data
+    parse_data = f"<b><u>{soup.title.string}</u></b><br>"
+    parse_data += f'<img src="{image_src}" alt="Image"><br>'
+    
     for no, (t, m) in enumerate(zip(tor, mag), start=1):
-        filename = sub(r"www\S+|\- |\.torrent", '', t.string)
+        filename = re.sub(r"www\S+|\- |\.torrent", '', t.string)
         parse_data += f'''
         
 {no}. <code>{filename}</code>
 ┖ <b>Links :</b> <a href="https://t.me/share/url?url=/ql%20{m['href'].split('&')[0]}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>'''
+    
     return parse_data
 
 async def tamilblasters(url):
