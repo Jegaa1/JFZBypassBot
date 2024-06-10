@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup, NavigableString, Tag
 from FZBypass import Config, LOGGER
 from FZBypass.core.bypass_ddl import transcript
 import re
+import asyncio
 
 async def sharespark(url: str) -> str:
     gd_txt = ""
@@ -156,6 +157,20 @@ async def toonworld4all(url: str):
                 prsd += f"<a href='{sl}'>{tl.string}</a>, "
         prsd = prsd[:-2]
     return prsd
+
+
+
+async def fetch_data():
+    await asyncio.sleep(1)
+    return "This is an async result"
+
+async def main():
+    response = fetch_data()  # This is a coroutine
+    result = await response  # This is now correct
+    print(result)
+
+# To run the async function
+asyncio.run(main())
 
 def tamilmv(url):
     cget = create_scraper().request
