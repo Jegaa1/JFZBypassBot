@@ -159,31 +159,28 @@ async def toonworld4all(url: str):
         prsd = prsd[:-2]
     return prsd
 
-async def fetch(session, url):
-    async with session.get(url) as response:
-        return await response.text()
-
 async def tamilmv(url):
-    async with ClientSession() as session:
-        resp_text = await fetch(session, url)
-        soup = BeautifulSoup(resp_text, 'html.parser')
+    cget = create_scraper().request
+    resp = cget("GET", url)
+    soup = BeautifulSoup(resp.text, "html.parser")
+    mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
+    tor = soup.select('a[data-fileext="torrent"]')
+
+    # Find the image
+    image = soup.find('img')
+    image_src = image['src'] if image else 'No image found'
         
-        # Find the magnet links and torrent links
-        mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
-        tor = soup.select('a[data-fileext="torrent"]')
+     # Parse the data
+    parse_data = f"<b><u>{soup.title.string}</u></b><br>"
+    parse_data += f'<img src="{image_src}" alt="Image"><br>'
         
-        # Find the image
-        image = soup.find('img')
-        image_src = image['src'] if image else 'No image found'
+    
+    #parse_data = f"<b><u>{soup.title.string}</u></b>"
+    for no, (t, m) in enumerate(zip(tor, mag), start=1):
+        filename = sub(r"www\S+|\- |\.torrent", "", t.string)
+        parse_data += f"""
         
-        # Parse the data
-        parse_data = f"<b><u>{soup.title.string}</u></b><br>"
-        parse_data += f'<img src="{image_src}" alt="Image"><br>'
-        
-        for no, (t, m) in enumerate(zip(tor, mag), start=1):
-            filename = re.sub(r"www\S+|\- |\.torrent", '', t.get_text(strip=True) if t else '')
-            parse_data += f'''
-            
 {no}. <code>{filename}</code>
-┖ <b>Links :</b> <a href="https://t.me/share/url?url=/ql%20{m['href'].split('&')[0]}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>'''
-        return parse_data
+┖ <b>Links :</b> <a href="https://t.me/share/url?url={m['href'].split('&')[0]}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>"""
+    return parse_data
+
