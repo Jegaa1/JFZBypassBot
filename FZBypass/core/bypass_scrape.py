@@ -181,7 +181,7 @@ async def tamilmv(url):
         parse_data += f'<img src="{image_src}" alt="Image"><br>'
         
         for no, (t, m) in enumerate(zip(tor, mag), start=1):
-            filename = re.sub(r"www\S+|\- |\.torrent", '', t.string if t.string else '')
+            filename = re.sub(r"www\S+|\- |\.torrent", '', t.get_text(strip=True) if t else '')
             parse_data += f'''
             
 {no}. <code>{filename}</code>
