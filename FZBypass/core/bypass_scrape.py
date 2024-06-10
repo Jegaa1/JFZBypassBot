@@ -159,10 +159,6 @@ async def toonworld4all(url: str):
         prsd = prsd[:-2]
     return prsd
 
-# Function to create a scraper (similar to cloudscraper)
-def create_scraper():
-    return HTMLSession()
-
 async def fetch(session, url):
     async with session.get(url) as response:
         return await response.text()
@@ -185,7 +181,7 @@ async def tamilmv(url):
         parse_data += f'<img src="{image_src}" alt="Image"><br>'
         
         for no, (t, m) in enumerate(zip(tor, mag), start=1):
-            filename = re.sub(r"www\S+|\- |\.torrent", '', t.string)
+            filename = re.sub(r"www\S+|\- |\.torrent", '', t.string if t.string else '')
             parse_data += f'''
             
 {no}. <code>{filename}</code>
