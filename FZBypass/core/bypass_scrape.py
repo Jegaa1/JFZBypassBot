@@ -6,7 +6,7 @@ from requests import get as rget
 from cloudscraper import create_scraper
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup, NavigableString, Tag
-from requests_html import HTMLSession
+
 
 from FZBypass import Config, LOGGER
 from FZBypass.core.bypass_ddl import transcript
