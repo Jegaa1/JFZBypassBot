@@ -165,17 +165,7 @@ async def tamilmv(url):
     soup = BeautifulSoup(resp.text, "html.parser")
     mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
     tor = soup.select('a[data-fileext="torrent"]')
-
-    # Find the image
-    image = soup.find('img')
-    image_src = image['src'] if image else 'No image found'
-        
-     # Parse the data
-    parse_data = f"<b><u>{soup.title.string}</u></b><br>"
-    parse_data += f'<img src="{image_src}" alt="Image"><br>'
-        
-    
-    #parse_data = f"<b><u>{soup.title.string}</u></b>"
+    parse_data = f"<b><u>{soup.title.string}</u></b>"
     for no, (t, m) in enumerate(zip(tor, mag), start=1):
         filename = sub(r"www\S+|\- |\.torrent", "", t.string)
         parse_data += f"""
@@ -183,4 +173,3 @@ async def tamilmv(url):
 {no}. <code>{filename}</code>
 ┖ <b>Links :</b> <a href="https://t.me/share/url?url={m['href'].split('&')[0]}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>"""
     return parse_data
-
