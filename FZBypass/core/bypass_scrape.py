@@ -159,17 +159,31 @@ async def toonworld4all(url: str):
         prsd = prsd[:-2]
     return prsd
 
-async def tamilmv(url):
-    cget = create_scraper().request
-    resp = cget("GET", url)
+
+
+def tamilmv(url):
+    scraper = cloudscraper.create_scraper()
+    resp = scraper.get(url)
     soup = BeautifulSoup(resp.text, "html.parser")
     mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
     tor = soup.select('a[data-fileext="torrent"]')
-    parse_data = f"<b><u>{soup.title.string}</u></b>"
+    
+    parsed_data = f"<b><u>{soup.title.string}</u></b>"
+    magnet_links = []
+    
     for no, (t, m) in enumerate(zip(tor, mag), start=1):
         filename = sub(r"www\S+|\- |\.torrent", "", t.string)
-        parse_data += f"""
+        parsed_data += f"""
         
 {no}. <code>{filename}</code>
 ┖ <b>Links :</b> <a href="https://t.me/share/url?url={m['href'].split('&')[0]}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>"""
-    return parse_data
+        
+        magnet_links.append(m['href'].split('&')[0])
+        
+    return parsed_data, magnet_links
+
+# Example usage
+url = "your_url_here"
+parsed_data, magnet_links = tamilmv(url)
+print(parsed_data)
+print(magnet_links)
