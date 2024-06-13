@@ -163,11 +163,17 @@ async def toonworld4all(url: str):
 import cfscrape
 from bs4 import BeautifulSoup
 from re import sub
+import asyncio
+import aiohttp
 
-def tamilmv(url):
-    cget = cfscrape.create_scraper().request
-    resp = cget("GET", url)
-    soup = BeautifulSoup(resp.text, "html.parser")
+async def fetch_content(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            return await response.text()
+
+async def tamilmv(url):
+    html_content = await fetch_content(url)
+    soup = BeautifulSoup(html_content, "html.parser")
     
     mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
     tor = soup.select('a[data-fileext="torrent"]')
@@ -186,3 +192,6 @@ def tamilmv(url):
 <code>/ql cmd {magnet_link}</code>"""
     
     return parse_data
+
+# Run the main function
+asyncio.run(main())
