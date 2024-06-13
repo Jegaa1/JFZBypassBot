@@ -182,8 +182,3 @@ def tamilmv(url):
         
     return parsed_data, magnet_links
 
-# Example usage
-url = "your_url_here"
-parsed_data, magnet_links = tamilmv(url)
-print(parsed_data)
-print(magnet_links)
