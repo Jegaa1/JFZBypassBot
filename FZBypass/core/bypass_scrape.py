@@ -172,7 +172,8 @@ async def tamilmv(url):
         parse_data += f"""
         
 {no}. <code>{filename}</code>
-┖ <b>Links :</b> <a href="https://t.me/share/url?url=/ql {m['href'].split('&')[0]}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>
+┖ <b>Links :</b> <a href="https://t.me/share/url?url={m['href'].split('&')[0]}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>
+
 <code>/ql {m['href'].split('&')[0]}</code>
 """
     return parse_data
