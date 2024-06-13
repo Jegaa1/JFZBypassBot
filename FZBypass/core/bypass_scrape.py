@@ -172,37 +172,8 @@ async def tamilmv(url):
         parse_data += f"""
         
 {no}. <code>{filename}</code>
-┖ <b>Links :</b> <a href="https://t.me/share/url?url={m['href'].split('&')[0]}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>"""
+┖ <b>Links :</b> <a href="https://t.me/share/url?url=/ql {m['href'].split('&')[0]}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>
+<code>/ql {m['href'].split('&')[0]}</code>
+"""
     return parse_data
-
-import httpx
-from bs4 import BeautifulSoup
-import re
-
-async def tamilblasters_scraper(url):
-    async with httpx.AsyncClient() as client:
-        try:
-            headers = {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-                "Referer": "https://tamilblasters.link/",
-                # Add any other necessary headers here
-            }
-            response = await client.get(url, headers=headers)
-            if response.status_code == 200:
-                soup = BeautifulSoup(response.text, "html.parser")
-                # Example: Extracting magnet links
-                mag_links = soup.select('a[href^="magnet:?xt=urn:btih:"]')
-                if mag_links:
-                    parse_data = f"<b><u>{soup.title.string}</u></b>"
-                    for idx, mag in enumerate(mag_links, start=1):
-                        magnet_link = mag['href']
-                        parse_data += f"""
-{idx}. <a href="{magnet_link}"><b>Magnet Link {idx}</b></a>"""
-                    return parse_data
-                else:
-                    return "No magnet links found on the page."
-            else:
-                return f"Failed to retrieve content. Status code: {response.status_code}"
-        except Exception as e:
-            return f"Error fetching data: {str(e)}"
 
