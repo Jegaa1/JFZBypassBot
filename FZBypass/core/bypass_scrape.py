@@ -160,23 +160,29 @@ async def toonworld4all(url: str):
     return prsd
 
 
-
 import cfscrape
 from bs4 import BeautifulSoup
-import asyncio
+from re import sub
 
-async def tamilmv(url):
-    scraper = cfscrape.create_scraper()
-    
-    # Use asyncio to run the scraper's request method synchronously
-    loop = asyncio.get_event_loop()
-    resp = await loop.run_in_executor(None, lambda: scraper.get(url))
-    
+def tamilmv(url):
+    cget = cfscrape.create_scraper().request
+    resp = cget("GET", url)
     soup = BeautifulSoup(resp.text, "html.parser")
     
     mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
+    tor = soup.select('a[data-fileext="torrent"]')
     
-    for link in mag:
-        magnet_link = link['href']
-        yield magnet_link
+    parse_data = f"<b><u>{soup.title.string}</u></b>"
+    
+    for no, (t, m) in enumerate(zip(tor, mag), start=1):
+        filename = sub(r"www\S+|\- |\.torrent", "", t.string)
+        magnet_link = m['href'].split('&')[0]
+        parse_data += f"""
+        
+{no}. <code>{filename}</code>
 
+<b>Links :</b> <a href="https://t.me/share/url?url={magnet_link}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>
+
+<code>/ql cmd {magnet_link}</code>"""
+    
+    return parse_data
