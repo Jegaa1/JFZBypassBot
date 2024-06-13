@@ -164,7 +164,7 @@ async def toonworld4all(url: str):
 import cfscrape
 from bs4 import BeautifulSoup
 
-async def extract_magnet_links(url):
+async def 1tamilmv(url):
     scraper = cfscrape.create_scraper()
     resp = await scraper.get(url)
     soup = BeautifulSoup(resp.text, "html.parser")
@@ -177,3 +177,18 @@ async def extract_magnet_links(url):
         magnet_links.append(magnet_link)
     
     return magnet_links
+
+async def 1tamilblasters(url):
+    scraper = cfscrape.create_scraper()
+    resp = await scraper.get(url)
+    soup = BeautifulSoup(resp.text, "html.parser")
+    
+    mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
+    
+    magnet_links = []
+    for link in mag:
+        magnet_link = link['href']
+        magnet_links.append(magnet_link)
+    
+    return magnet_links
+
