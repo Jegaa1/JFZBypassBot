@@ -164,7 +164,7 @@ async def toonworld4all(url: str):
 import cfscrape
 from bs4 import BeautifulSoup
 
-async def 1tamilmv(url):
+async def tamilmv(url):
     scraper = cfscrape.create_scraper()
     resp = await scraper.get(url)
     soup = BeautifulSoup(resp.text, "html.parser")
@@ -178,7 +178,7 @@ async def 1tamilmv(url):
     
     return magnet_links
 
-async def 1tamilblasters(url):
+async def tamilblasters(url):
     scraper = cfscrape.create_scraper()
     resp = await scraper.get(url)
     soup = BeautifulSoup(resp.text, "html.parser")
