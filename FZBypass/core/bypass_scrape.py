@@ -165,8 +165,8 @@ import cfscrape
 from bs4 import BeautifulSoup
 
 async def tamilmv(url):
-    scraper = cfscrape.create_scraper()
-    resp = await scraper.get(url)
+    cget = create_scraper().request
+    resp = cget("GET", url)
     soup = BeautifulSoup(resp.text, "html.parser")
     
     mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
@@ -179,8 +179,8 @@ async def tamilmv(url):
     return magnet_links
 
 async def tamilblasters(url):
-    scraper = cfscrape.create_scraper()
-    resp = await scraper.get(url)
+    cget = create_scraper().request
+    resp = cget("GET", url)
     soup = BeautifulSoup(resp.text, "html.parser")
     
     mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
