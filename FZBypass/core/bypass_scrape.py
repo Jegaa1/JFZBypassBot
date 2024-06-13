@@ -175,17 +175,27 @@ async def tamilmv(url):
 ┖ <b>Links :</b> <a href="https://t.me/share/url?url={m['href'].split('&')[0]}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>"""
     return parse_data
 
+import httpx
+from bs4 import BeautifulSoup
+from re import sub
+
 async def tamilblasters(url):
-    cget = create_scraper().request
-    resp = cget("GET", url)
-    soup = BeautifulSoup(resp.text, "html.parser")
-    mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
-    tor = soup.select('a[data-fileext="torrent"]')
-    parse_data = f"<b><u>{soup.title.string}</u></b>"
-    for no, (t, m) in enumerate(zip(tor, mag), start=1):
-        filename = sub(r"www\S+|\- |\.torrent", "", t.string)
-        parse_data += f"""
-        
-{no}. <code>{filename}</code>
-┖ <b>Links :</b> <a href="https://t.me/share/url?url={m['href'].split('&')[0]}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>"""
-    return parse_data
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.get(url)
+            if response.status_code == 200:
+                soup = BeautifulSoup(response.text, "html.parser")
+                mag_links = soup.select('a[href^="magnet:?xt=urn:btih:"]')
+                tor_links = soup.select('a[data-fileext="torrent"]')
+                parse_data = f"<b><u>{soup.title.string}</u></b>"
+                for idx, (tor, mag) in enumerate(zip(tor_links, mag_links), start=1):
+                    filename = sub(r"www\S+|\- |\.torrent", "", tor.string)
+                    parse_data += f"""
+                    
+{idx}. <code>{filename}</code>
+┖ <b>Links :</b> <a href="https://t.me/share/url?url={mag['href'].split('&')[0]}"><b>Magnet </b>🧲</a>  | <a href="{tor['href']}"><b>Torrent 🌐</b></a>"""
+                return parse_data
+            else:
+                return f"Failed to retrieve content. Status code: {response.status_code}"
+        except Exception as e:
+            return f"Error fetching data: {str(e)}"
