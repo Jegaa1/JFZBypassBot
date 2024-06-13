@@ -1,5 +1,5 @@
 #jega
-
+import cfscrape
 from asyncio import gather, create_task
 from re import search, match, findall, sub
 from requests import get as rget
