@@ -161,40 +161,17 @@ async def toonworld4all(url: str):
 
 
 
-def tamilmv(url):
-    scraper = cloudscraper.create_scraper()
-    resp = scraper.get(url)
+async def tamilmv(url):
+    cget = create_scraper().request
+    resp = cget("GET", url)
     soup = BeautifulSoup(resp.text, "html.parser")
     mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
     tor = soup.select('a[data-fileext="torrent"]')
-    
-    parsed_data = f"<b><u>{soup.title.string}</u></b>"
-    magnet_links = []
-    
+    parse_data = f"<b><u>{soup.title.string}</u></b>"
     for no, (t, m) in enumerate(zip(tor, mag), start=1):
         filename = sub(r"www\S+|\- |\.torrent", "", t.string)
-        parsed_data += f"""
+        parse_data += f"""
         
 {no}. <code>{filename}</code>
 ┖ <b>Links :</b> <a href="https://t.me/share/url?url={m['href'].split('&')[0]}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>"""
-        
-        magnet_links.append(m['href'].split('&')[0])
-        
-    return parsed_data, magnet_links
-
-
-async def coroutine1():
-    await asyncio.sleep(1)
-    return 'Result 1'
-
-async def coroutine2():
-    await asyncio.sleep(2)
-    return 'Result 2'
-
-async def main():
-    result1, result2 = await asyncio.gather(coroutine1(), coroutine2())
-    print(result1)
-    print(result2)
-
-# Run the main function
-asyncio.run(main())
+    return parse_data
