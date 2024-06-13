@@ -163,32 +163,20 @@ async def toonworld4all(url: str):
 
 import cfscrape
 from bs4 import BeautifulSoup
+import asyncio
 
 async def tamilmv(url):
-    cget = create_scraper().request
-    resp = cget("GET", url)
+    scraper = cfscrape.create_scraper()
+    
+    # Use asyncio to run the scraper's request method synchronously
+    loop = asyncio.get_event_loop()
+    resp = await loop.run_in_executor(None, lambda: scraper.get(url))
+    
     soup = BeautifulSoup(resp.text, "html.parser")
     
     mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
     
-    magnet_links = []
     for link in mag:
         magnet_link = link['href']
-        magnet_links.append(magnet_link)
-    
-    return magnet_links
-
-async def tamilblasters(url):
-    cget = create_scraper().request
-    resp = cget("GET", url)
-    soup = BeautifulSoup(resp.text, "html.parser")
-    
-    mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
-    
-    magnet_links = []
-    for link in mag:
-        magnet_link = link['href']
-        magnet_links.append(magnet_link)
-    
-    return magnet_links
+        yield magnet_link
 
