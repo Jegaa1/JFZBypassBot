@@ -177,25 +177,32 @@ async def tamilmv(url):
 
 import httpx
 from bs4 import BeautifulSoup
-from re import sub
+import re
 
-async def tamilblasters(url):
+async def tamilblasters_scraper(url):
     async with httpx.AsyncClient() as client:
         try:
-            response = await client.get(url)
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+                "Referer": "https://tamilblasters.link/",
+                # Add any other necessary headers here
+            }
+            response = await client.get(url, headers=headers)
             if response.status_code == 200:
                 soup = BeautifulSoup(response.text, "html.parser")
+                # Example: Extracting magnet links
                 mag_links = soup.select('a[href^="magnet:?xt=urn:btih:"]')
-                tor_links = soup.select('a[data-fileext="torrent"]')
-                parse_data = f"<b><u>{soup.title.string}</u></b>"
-                for idx, (tor, mag) in enumerate(zip(tor_links, mag_links), start=1):
-                    filename = sub(r"www\S+|\- |\.torrent", "", tor.string)
-                    parse_data += f"""
-                    
-{idx}. <code>{filename}</code>
-┖ <b>Links :</b> <a href="https://t.me/share/url?url={mag['href'].split('&')[0]}"><b>Magnet </b>🧲</a>  | <a href="{tor['href']}"><b>Torrent 🌐</b></a>"""
-                return parse_data
+                if mag_links:
+                    parse_data = f"<b><u>{soup.title.string}</u></b>"
+                    for idx, mag in enumerate(mag_links, start=1):
+                        magnet_link = mag['href']
+                        parse_data += f"""
+{idx}. <a href="{magnet_link}"><b>Magnet Link {idx}</b></a>"""
+                    return parse_data
+                else:
+                    return "No magnet links found on the page."
             else:
                 return f"Failed to retrieve content. Status code: {response.status_code}"
         except Exception as e:
             return f"Error fetching data: {str(e)}"
+
