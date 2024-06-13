@@ -171,27 +171,29 @@ async def fetch_content(url):
         async with session.get(url) as response:
             return await response.text()
 
-async def tamilmv(url):
-    html_content = await fetch_content(url)
-    soup = BeautifulSoup(html_content, "html.parser")
+import cfscrape
+from bs4 import BeautifulSoup
+import re
+
+def tamilmv(url):
+    scraper = cfscrape.create_scraper()
+    resp = scraper.get(url)
+    soup = BeautifulSoup(resp.text, "html.parser")
     
-    mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
-    tor = soup.select('a[data-fileext="torrent"]')
+    magnet_links = soup.select('a[href^="magnet:?xt=urn:btih:"]')
+    torrent_links = soup.select('a[data-fileext="torrent"]')
     
     parse_data = f"<b><u>{soup.title.string}</u></b>"
     
-    for no, (t, m) in enumerate(zip(tor, mag), start=1):
-        filename = sub(r"www\S+|\- |\.torrent", "", t.string)
+    for no, (t, m) in enumerate(zip(torrent_links, magnet_links), start=1):
+        filename = re.sub(r"www\S+|\- |\.torrent", "", t.string)
         magnet_link = m['href'].split('&')[0]
         parse_data += f"""
         
 {no}. <code>{filename}</code>
+<b>Links :</b> <a href="https://t.me/share/url?url={magnet_link}"><b>Magnet </b>🧲</a> | <a href="{t['href']}"><b>Torrent 🌐</b></a>
 
-<b>Links :</b> <a href="https://t.me/share/url?url={magnet_link}"><b>Magnet </b>🧲</a>  | <a href="{t['href']}"><b>Torrent 🌐</b></a>
-
-<code>/ql cmd {magnet_link}</code>"""
+<b>QL :</b> <code>magnetic link {magnet_link}</code>"""
     
     return parse_data
 
-# Run the main function
-asyncio.run(main())
