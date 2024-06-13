@@ -182,3 +182,19 @@ def tamilmv(url):
         
     return parsed_data, magnet_links
 
+
+async def coroutine1():
+    await asyncio.sleep(1)
+    return 'Result 1'
+
+async def coroutine2():
+    await asyncio.sleep(2)
+    return 'Result 2'
+
+async def main():
+    result1, result2 = await asyncio.gather(coroutine1(), coroutine2())
+    print(result1)
+    print(result2)
+
+# Run the main function
+asyncio.run(main())
