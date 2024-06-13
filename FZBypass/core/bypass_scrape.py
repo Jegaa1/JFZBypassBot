@@ -160,21 +160,6 @@ async def toonworld4all(url: str):
     return prsd
 
 
-import cfscrape
-from bs4 import BeautifulSoup
-from re import sub
-import asyncio
-import aiohttp
-
-async def fetch_content(url):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            return await response.text()
-
-import cfscrape
-from bs4 import BeautifulSoup
-import re
-
 def tamilmv(url):
     scraper = cfscrape.create_scraper()
     resp = scraper.get(url)
