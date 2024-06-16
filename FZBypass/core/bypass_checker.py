@@ -43,7 +43,7 @@ async def direct_link_checker(link, onlylink=False):
         blink = await transcript(link, "https://go.ronylink.com/", "https://livejankari.com/", 9)
     elif bool(match(r"https?:\/\/gtlinks\.\S+", link)):
         blink = await transcript(link, "https://go.bloggingaro.com/", "https://hipsonyc.com/", 8)
-    elif bool(match(r"https?:\/\/.+\.(tnshort|tnseries)\.\S+", link)):
+    elif bool(match(r"https?:\/\/(tnshort|tnseries)\.\S+", link)):
         blink = await transcript(link, "https://news.sagenews.in/", "https://financeyogi.net/", 10)
     elif bool(match(r"https?:\/\/mdisky\.\S+", link)):
         blink = await transcript(link, "https://go.bloggingaro.com/", "https://www.bloggingaro.com/", 6)
