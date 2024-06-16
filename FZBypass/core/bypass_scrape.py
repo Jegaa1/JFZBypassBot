@@ -171,6 +171,6 @@ async def tamilmv(url):
         filename = sub(r"www\S+|\- |\.torrent", "", t.string)
         parse_data += f"""
         
-    {m['href'].split('&')[0]}"""
+{m['href'].split('&')[0]}"""
     
     return parse_data
