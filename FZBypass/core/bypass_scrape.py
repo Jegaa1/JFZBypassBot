@@ -159,50 +159,27 @@ async def toonworld4all(url: str):
         prsd = prsd[:-2]
     return prsd
 
-
 import aiohttp
-from aiohttp import ClientSession
 from bs4 import BeautifulSoup
 import re
 
 async def tamilmv(url):
-    async with ClientSession() as session:
+    async with aiohttp.ClientSession() as session:
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
-            "Referer": url,
-            "Accept-Language": "en-US,en;q=0.5",
-            "Accept-Encoding": "gzip, deflate, br",
-            "DNT": "1",  # Do Not Track Request Header
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
         }
-        
-        retries = 3
-        for attempt in range(retries):
-            async with session.get(url, headers=headers) as response:
-                if response.status == 403:
-                    if attempt < retries - 1:
-                        continue  # Retry on 403
-                    return "403 Forbidden: Access to the URL is denied."
-                
-                text = await response.text()
-                soup = BeautifulSoup(text, "html.parser")
-                
-                # Extract magnet links
-                mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
-                
-                # Extract poster images
-                posters = soup.find_all('img', {'class': 'ipsImage'})  # Adjust class or attribute accordingly
-                
-                parse_data = f"<b><u><code>{soup.title.string}</code></u></b>"
-                
-                for no, m in enumerate(mag, start=1):
-                    parse_data += f"""
+        async with session.get(url, headers=headers) as response:
+            if response.status == 403:
+                return "403 Forbidden: Access to the URL is denied."
+
+            text = await response.text()
+            soup = BeautifulSoup(text, "html.parser")
+            mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
+            tor = soup.select('a[data-fileext="torrent"]')
+            parse_data = f"<b><u><code>{soup.title.string}</code></u></b>"
+            for no, (t, m) in enumerate(zip(tor, mag), start=1):
+                filename = re.sub(r"www\S+|\- |\.torrent", "", t.string)
+                parse_data += f"""
 {m['href'].split('&')[0]}"""
 
-                parse_data += "\n\n<b>Poster Images:</b>\n"
-                for img in posters:
-                    img_src = img['src']
-                    if not img_src.startswith('http'):
-                        img_src = url + img_src
-                    parse_data += f"{img_src}\n"
-
-                return parse_data
+            return parse_data
