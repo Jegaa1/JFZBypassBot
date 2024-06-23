@@ -162,29 +162,30 @@ async def toonworld4all(url: str):
 import aiohttp
 from bs4 import BeautifulSoup
 import re
+
 async def tamilmv(url):
-async with aiohttp.ClientSession() as session:
-headers = {
-"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
-}
-async with session.get(url, headers=headers) as response:
-if response.status == 403:
-return "403 Forbidden: Access to the URL is denied."
-text = await response.text()
-soup = BeautifulSoup(text, "html.parser")
-# Extract magnet links
-mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
-# Extract poster images (assuming posters are in <img> tags with a specific class or attribute)
-posters = soup.find_all('img', {'class': 'ipsImage'}) # Adjust class or attribute accordingly
-parse_data = f"<b><u><code>{soup.title.string}</code></u></b>"
-# Combine magnet links
-for no, m in enumerate(mag, start=1):
-parse_data += f"\n{m['href'].split('&')[0]}"
-# Combine poster images
-parse_data += "\n\n<b>Poster Images:</b>\n"
-for img in posters:
-img_src = img['src']
-if not img_src.startswith('http'):
-img_src = url + img_src
-parse_data += f"{img_src}\n"
-return parse_data
+    async with aiohttp.ClientSession() as session:
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+        }
+        async with session.get(url, headers=headers) as response:
+            if response.status == 403:
+                return "403 Forbidden: Access to the URL is denied."
+            text = await response.text()
+            soup = BeautifulSoup(text, "html.parser")
+            # Extract magnet links
+            mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
+            # Extract poster images (assuming posters are in <img> tags with a specific class or attribute)
+            posters = soup.find_all('img', {'class': 'ipsImage'})  # Adjust class or attribute accordingly
+            parse_data = f"<b><u><code>{soup.title.string}</code></u></b>"
+            # Combine magnet links
+            for no, m in enumerate(mag, start=1):
+                parse_data += f"\n{m['href'].split('&')[0]}"
+            # Combine poster images
+            parse_data += "\n\n<b>Poster Images:</b>\n"
+            for img in posters:
+                img_src = img['src']
+                if not img_src.startswith('http'):
+                    img_src = url + img_src
+                parse_data += f"{img_src}\n"
+            return parse_data
