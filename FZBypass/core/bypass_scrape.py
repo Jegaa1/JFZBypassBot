@@ -174,12 +174,26 @@ async def tamilmv(url):
 
             text = await response.text()
             soup = BeautifulSoup(text, "html.parser")
+            
+            # Extract magnet links
             mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
-            tor = soup.select('a[data-fileext="torrent"]')
+            
+            # Extract poster images (assuming posters are in <img> tags with a specific class or attribute)
+            posters = soup.find_all('img', {'class': 'ipsImage'})  # Adjust class or attribute accordingly
+            
             parse_data = f"<b><u><code>{soup.title.string}</code></u></b>"
-            for no, (t, m) in enumerate(zip(tor, mag), start=1):
-                filename = re.sub(r"www\S+|\- |\.torrent", "", t.string)
-                parse_data += f"""
-{m['href'].split('&')[0]}"""
+            
+            # Combine magnet links
+            for no, m in enumerate(mag, start=1):
+                parse_data += f"\n{m['href'].split('&')[0]}"
+            
+            # Combine poster images
+            parse_data += "\n\n<b>Poster Images:</b>\n"
+            for img in posters:
+                img_src = img['src']
+                if not img_src.startswith('http'):
+                    img_src = url + img_src
+                parse_data += f"{img_src}\n"
 
             return parse_data
+
