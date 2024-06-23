@@ -178,8 +178,8 @@ async def tamilmv(url):
             # Extract magnet links
             mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
             
-            # Extract poster images (update class or attribute if necessary)
-            posters = soup.find_all('img', {'class': 'ipsImage'})  # Adjust class or attribute accordingly
+            # Extract poster images (adjust class or attribute accordingly)
+            posters = soup.find_all('img', {'class': 'ipsImage'})  # Update class or attribute if necessary
             
             # Debugging: Print found posters
             if not posters:
