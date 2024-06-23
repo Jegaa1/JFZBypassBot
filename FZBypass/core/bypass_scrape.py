@@ -160,27 +160,27 @@ async def toonworld4all(url: str):
     return prsd
 
 
-import cloudscraper
+import aiohttp
 from bs4 import BeautifulSoup
 import re
 
-def tamilmv(url):
-    scraper = cloudscraper.create_scraper()
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
-    }
-    resp = scraper.get(url, headers=headers)
+async def tamilmv(url):
+    async with aiohttp.ClientSession() as session:
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+        }
+        async with session.get(url, headers=headers) as response:
+            if response.status == 403:
+                return "403 Forbidden: Access to the URL is denied."
 
-    if resp.status_code == 403:
-        return "403 Forbidden: Access to the URL is denied."
-
-    soup = BeautifulSoup(resp.text, "html.parser")
-    mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
-    tor = soup.select('a[data-fileext="torrent"]')
-    parse_data = f"<b><u><code>{soup.title.string}</code></u></b>"
-    for no, (t, m) in enumerate(zip(tor, mag), start=1):
-        filename = re.sub(r"www\S+|\- |\.torrent", "", t.string)
-        parse_data += f"""
+            text = await response.text()
+            soup = BeautifulSoup(text, "html.parser")
+            mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
+            tor = soup.select('a[data-fileext="torrent"]')
+            parse_data = f"<b><u><code>{soup.title.string}</code></u></b>"
+            for no, (t, m) in enumerate(zip(tor, mag), start=1):
+                filename = re.sub(r"www\S+|\- |\.torrent", "", t.string)
+                parse_data += f"""
 {m['href'].split('&')[0]}"""
 
-    return parse_data
+            return parse_data
