@@ -160,16 +160,27 @@ async def toonworld4all(url: str):
     return prsd
 
 
-async def tamilmv(url):
-    cget = create_scraper().request
-    resp = cget("GET", url)
+import cloudscraper
+from bs4 import BeautifulSoup
+import re
+
+def tamilmv(url):
+    scraper = cloudscraper.create_scraper()
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+    }
+    resp = scraper.get(url, headers=headers)
+
+    if resp.status_code == 403:
+        return "403 Forbidden: Access to the URL is denied."
+
     soup = BeautifulSoup(resp.text, "html.parser")
     mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
     tor = soup.select('a[data-fileext="torrent"]')
     parse_data = f"<b><u><code>{soup.title.string}</code></u></b>"
     for no, (t, m) in enumerate(zip(tor, mag), start=1):
-        filename = sub(r"www\S+|\- |\.torrent", "", t.string)
+        filename = re.sub(r"www\S+|\- |\.torrent", "", t.string)
         parse_data += f"""
 {m['href'].split('&')[0]}"""
-    
+
     return parse_data
