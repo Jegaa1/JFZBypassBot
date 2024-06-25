@@ -191,7 +191,7 @@ async def tamilmv(url):
                 parse_data += f"\n{no}. <a href='{m['href'].split('&')[0]}'>{m['href'].split('&')[0]}</a>"
             
             # Combine poster images
-            parse_data += "\n\n<b>Poster Images:</b>\n"
+            parse_data += ""
             for img in posters:
                 img_src = img['src']
                 if not img_src.startswith('http'):
