@@ -188,7 +188,7 @@ async def tamilmv(url):
             
             # Combine magnet links
             for no, m in enumerate(mag, start=1):
-                parse_data += f"\n{no}. <a href='{m['href'].split('&')[0]}'>{m['href'].split('&')[0]}</a>"
+                parse_data += f"\n<a href='{m['href'].split('&')[0]}'>{m['href'].split('&')[0]}</a>"
             
             # Combine poster images
             parse_data += "\n"
