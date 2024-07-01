@@ -183,12 +183,12 @@ async def tamilmv(url):
             
             # Extract poster images (assuming posters are in <img> tags with a specific class or attribute)
             posters = soup.find_all('img', {'class': 'ipsImage'})  # Adjust class or attribute accordingly
-            
-            parse_data = f"<b><u><code>{soup.title.string}</code></u></b>"
-            
+                       
             # Combine magnet links
             for no, m in enumerate(mag, start=1):
                 parse_data += f"\n<a href='{m['href'].split('&')[0]}'>{m['href'].split('&')[0]}</a>"
+
+            parse_data = f"<b><u><code>{soup.title.string}</code></u></b>"
             
             # Combine poster images
             parse_data += "\n"
