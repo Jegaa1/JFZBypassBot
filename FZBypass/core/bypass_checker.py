@@ -78,8 +78,8 @@ async def direct_link_checker(link, onlylink=False):
     elif bool(match(r"https?:\/\/indianshortner\.\S+", link)):
         blink = await transcript(link, "https://indianshortner.com/", "https://moddingzone.in/", 5)
     elif bool(match(r"https?:\/\/m.easysky\.\S+", link)):
-        blink = await transcript(link, "https://techy.veganab.co/", "https://veganab.co/", 8)
-        blink = await transcript(link, "https://vip.linkbnao.com", "https://ffworld.xyz/", 2)
+        blink = await transcript(link, "https://techy.veganab.co/", "https://camdigest.com", 8)
+        #blink = await transcript(link, "https://vip.linkbnao.com", "https://ffworld.xyz/", 2)
     elif bool(match(r"https?:\/\/.+\.tnlink\.\S+", link)):
         blink = await transcript(link, "https://go.tnshort.net/", "https://market.finclub.in/", 0.8)
     elif bool(match(r"https?:\/\/link4earn\.\S+", link)):
