@@ -38,6 +38,8 @@ async def direct_link_checker(link, onlylink=False):
         blink = await try2link(link)
     elif bool(match(r"https?:\/\/pearl.hidden2history\.\S+", link)):
         blink = await transcript(link, "https://hidden2history.in/", "https://link.cartoontamilan.in/", 9)
+    elif bool(match(r"https?:\/\/primeurl\.\S+", link)):
+        blink = await transcript(link, "https://go.primeurl.in/", "https://earnbox.bgmi32bitapk.in/", 9)
     
     elif bool(match(r"https?:\/\/ronylink\.\S+", link)):
         blink = await transcript(link, "https://go.ronylink.com/", "https://livejankari.com/", 9)
