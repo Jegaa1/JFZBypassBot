@@ -127,9 +127,9 @@ async def direct_link_checker(link, onlylink=False):
     elif bool(match(r"https?:\/\/urlspay\.\S+", link)):
         blink = await transcript(link, "https://finance.smallinfo.in/", "https://tech.filmypoints.in/", 5)
     elif bool(match(r"https?:\/\/.+\.tnvalue\.\S+", link)):
-        blink = await transcript(link, "https://gadgets.webhostingtips.club/", "https://earnme.club/", 10)
+        blink = await transcript(link, "https://gadgets.webhostingtips.club/", "https://dailynetflixcookies.in/", 10)
     elif bool(match(r"https?:\/\/tnvalue\.\S+", link)):
-        blink = await transcript(link, "https://gadgets.webhostingtips.club/", "https://earnme.club/", 10)
+        blink = await transcript(link, "https://gadgets.webhostingtips.club/", "https://dailynetflixcookies.in/", 10)
     elif bool(match(r"https?:\/\/modijiurl\.\S+", link)):
         blink = await transcript(link, "https://modijiurl.com/", "https://djmp3world.in/", 5)
     elif bool(match(r"https?:\/\/pdisk\.\S+", link)):
