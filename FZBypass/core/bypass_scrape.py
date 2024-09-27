@@ -159,18 +159,15 @@ async def toonworld4all(url: str):
         prsd = prsd[:-2]
     return prsd
 
-import asyncio
-from scraper import create_scraper
-
 async def tamilmv(url):
-    async with create_scraper().request("GET", url) as resp:
-        soup = BeautifulSoup(await resp.text(), "html.parser")
-        
-    magnet_links = soup.select('a[href^="magnet:?xt=urn:btih:"]')
+    cget = create_scraper().request
+    resp = cget("GET", url)
+    soup = BeautifulSoup(resp.text, "html.parser")
+    mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
     
-    parse_data = f"<b><u>{soup.title.string}</u></b>\n\n"
+    parse = f"<b><u>{soup.title.string}</u></b>\n\n"
     
-    for m in magnet_links:
-        parse_data += f"<a href='{m['href']}'>{m['href']}</a>\n"
+    for m in mag:
+        parse += f"<b>Magnet Link:</b> <a href='{m['href']}'>{m['href']}</a>\n"
     
-    return parse_data
+    return parse
