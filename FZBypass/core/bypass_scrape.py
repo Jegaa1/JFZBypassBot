@@ -172,11 +172,3 @@ async def tamilmv(url):
     
     return parse_data
     
-    chunk_size = 4096
-    chunks = [parse_data[i:i+chunk_size] for i in range(0, len(parse_data), chunk_size)]
-    
-    return chunks
-
-chunks = await tamilmv(url)
-for chunk in chunks:
-    await client.send_message(chat_id, chunk)
