@@ -159,6 +159,9 @@ async def toonworld4all(url: str):
         prsd = prsd[:-2]
     return prsd
 
+import asyncio
+from scraper import create_scraper
+
 async def tamilmv(url):
     async with create_scraper().request("GET", url) as resp:
         soup = BeautifulSoup(await resp.text(), "html.parser")
@@ -171,4 +174,3 @@ async def tamilmv(url):
         parse_data += f"<a href='{m['href']}'>{m['href']}</a>\n"
     
     return parse_data
-    
