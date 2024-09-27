@@ -169,4 +169,4 @@ async def tamilmv(url):
     for m in mag:
         parse_data += f"<a href='{m['href'].split('&')[0]}'>{m['href'].split('&')[0]}</a>\n"
     
-    return parse
+    return parse_data
