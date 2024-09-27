@@ -160,14 +160,23 @@ async def toonworld4all(url: str):
     return prsd
 
 async def tamilmv(url):
-    cget = create_scraper().request
-    resp = cget("GET", url)
-    soup = BeautifulSoup(resp.text, "html.parser")
-    mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
+    async with create_scraper().request("GET", url) as resp:
+        soup = BeautifulSoup(await resp.text(), "html.parser")
+        
+    magnet_links = soup.select('a[href^="magnet:?xt=urn:btih:"]')
     
     parse_data = f"<b><u>{soup.title.string}</u></b>\n\n"
     
-    for m in mag:
+    for m in magnet_links:
         parse_data += f"<a href='{m['href']}'>{m['href']}</a>\n"
     
     return parse_data
+    
+    chunk_size = 4096
+    chunks = [parse_data[i:i+chunk_size] for i in range(0, len(parse_data), chunk_size)]
+    
+    return chunks
+
+chunks = await tamilmv(url)
+for chunk in chunks:
+    await client.send_message(chat_id, chunk)
