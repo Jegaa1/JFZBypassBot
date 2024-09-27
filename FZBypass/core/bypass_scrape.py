@@ -166,10 +166,18 @@ async def tamilmv(url):
     mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
     
     title = f"<b><u>{soup.title.string}</u></b>"
-    magnetic_links = ""
+    magnetic_links = []
     
     for m in mag:
-        magnetic_links += f"<a href='{m['href']}'>{m['href']}</a>\n"
+        magnetic_links.append(f"<b>Magnet Link:</b> <a href='{m['href']}'>{m['href']}</a>")
     
-    await send_message(title)
-    await send_message(magnetic_links)
+    return title, magnetic_links
+
+title, magnetic_links = await tamilmv(url)
+
+# Send title as separate message
+await send_message(title)
+
+# Send magnetic links as separate messages
+for link in magnetic_links:
+    await send_message(link)
