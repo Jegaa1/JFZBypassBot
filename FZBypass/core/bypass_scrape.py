@@ -168,6 +168,6 @@ async def tamilmv(url):
     parse_data = f"<b><u>{soup.title.string}</u></b>\n\n"
     
     for m in mag:
-        parse_data += f"<b>Magnet Link:</b> <a href='{m['href']}'>{m['href']}</a>\n"
+        parse_data += f"<a href='{m['href']}'>{m['href']}</a>\n"
     
     return parse_data
