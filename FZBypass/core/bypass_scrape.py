@@ -159,43 +159,14 @@ async def toonworld4all(url: str):
         prsd = prsd[:-2]
     return prsd
 
-import aiohttp
-from bs4 import BeautifulSoup
-
 async def tamilmv(url):
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
-    }
+    cget = create_scraper().request
+    resp = cget("GET", url)
+    soup = BeautifulSoup(resp.text, "html.parser")
+    mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
+    parse_data = f"<b><u>{soup.title.string}</u></b>\n\n"
     
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url, headers=headers) as response:
-            if response.status == 403:
-                return "403 Forbidden: Access to the URL is denied."
-            
-            if response.status != 200:
-                return f"Error: Unable to access the URL, status code {response.status}"
-            
-            text = await response.text()
-            soup = BeautifulSoup(text, "html.parser")
-            
-            # Extract magnet links
-            mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
-            
-            # Extract poster images (assuming posters are in <img> tags with a specific class or attribute)
-            posters = soup.find_all('img', {'class': 'ipsImage'})  # Adjust class or attribute accordingly
-                       
-            # Combine magnet links
-            for no, m in enumerate(mag, start=1):
-                parse_data += f"\n<a href='{m['href'].split('&')[0]}'>{m['href'].split('&')[0]}</a>"
-
-            parse_data = f"<b><u><code>{soup.title.string}</code></u></b>"
-            
-            # Combine poster images
-            parse_data += "\n"
-            for img in posters:
-                img_src = img['src']
-                if not img_src.startswith('http'):
-                    img_src = url.rstrip('/') + '/' + img_src.lstrip('/')
-                parse_data += f"<a href='{img_src}'>{img_src}</a>\n"
-            
-            return parse_data
+    for m in mag:
+        parse_data += f"<a href='{m['href'].split('&')[0]}'>{m['href'].split('&')[0]}</a>\n"
+    
+    return parse
