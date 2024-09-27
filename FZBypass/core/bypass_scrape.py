@@ -164,13 +164,9 @@ async def tamilmv(url):
     resp = cget("GET", url)
     soup = BeautifulSoup(resp.text, "html.parser")
     mag = soup.select('a[href^="magnet:?xt=urn:btih:"]')
-
-    #parse_data = ""
-
+    parse_data = f"<b><u>{soup.title.string}</u></b>\n\n"
+    
     for m in mag:
-        parse_data += f"""
-"""
-
-    parse_data = f"<b><u>{soup.title.string}</u></b>\n\n" + parse_data
-
+        parse_data += f"<a href='{m['href'].split('&')[0]}'>{m['href'].split('&')[0]}</a>\n"
+    
     return parse_data
